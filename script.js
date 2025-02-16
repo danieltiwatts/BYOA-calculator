@@ -6,6 +6,11 @@ let operator = null;
 let waitingForSecondOperand = false;
 let fartSound = document.getElementById('fartSound');
 
+// Initialize sound toggle in localStorage if it doesn't exist
+if (localStorage.getItem('useFartSound') === null) {
+    localStorage.setItem('useFartSound', 'true');
+}
+
 buttons.forEach(button => {
     button.addEventListener('click', () => {
         const value = button.value;
@@ -29,10 +34,31 @@ buttons.forEach(button => {
             currentValue = display.value;
         } else if (value === '=') {
             if (operator && !waitingForSecondOperand) {
-                fartSound.play();
                 const secondOperand = parseFloat(currentValue);
                 const result = calculate(firstOperand, operator, secondOperand);
                 display.value = result;
+                
+                // Get current sound mode
+                const useFartSound = localStorage.getItem('useFartSound') === 'true';
+                
+                if (useFartSound) {
+                    fartSound.play();
+                } else {
+                    const utterance = new SpeechSynthesisUtterance(`It's ${result} you fucking idiot`);
+                    utterance.rate = 0.9;
+                    utterance.pitch = 0.9;
+                    utterance.volume = 1.0;
+                    utterance.lang = 'en-US';
+                    
+                    window.speechSynthesis.cancel();
+                    window.speechSynthesis.speak(utterance);
+                }
+                
+                // Toggle sound mode for next time
+                localStorage.setItem('useFartSound', (!useFartSound).toString());
+                
+                createSteamEffect();
+                
                 firstOperand = result;
                 operator = null;
                 waitingForSecondOperand = true;
@@ -69,4 +95,14 @@ function calculate(first, operator, second) {
         default:
             return second;
     }
+}
+
+function createSteamEffect() {
+    const steam = document.createElement('div');
+    steam.className = 'steam';
+    document.querySelector('.calculator').appendChild(steam);
+    
+    setTimeout(() => {
+        steam.remove();
+    }, 2000);
 } 

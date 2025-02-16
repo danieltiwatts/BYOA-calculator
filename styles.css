@@ -17,6 +17,7 @@ body {
     border-radius: 10px;
     padding: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    position: relative;
 }
 
 .display {
@@ -59,4 +60,50 @@ button.operator {
 
 button.operator:hover {
     background-color: #ffaa33;
+}
+
+.steam {
+    position: absolute;
+    right: 20px;
+    bottom: 85%;
+    width: 40px;
+    height: 40px;
+    background: rgba(150, 150, 150, 0.8);
+    border-radius: 50%;
+    pointer-events: none;
+    animation: steam 2s ease-out forwards;
+    z-index: 1000;
+}
+
+@keyframes steam {
+    0% {
+        transform: scale(0.1) translateY(0) translateX(0);
+        opacity: 0;
+        background: rgba(150, 150, 150, 0.9);
+    }
+    20% {
+        transform: scale(0.8) translateY(-10px) translateX(5px);
+        opacity: 0.9;
+        background: rgba(150, 150, 150, 0.8);
+    }
+    40% {
+        transform: scale(1.2) translateY(-20px) translateX(-5px);
+        opacity: 0.8;
+        background: rgba(150, 150, 150, 0.7);
+    }
+    60% {
+        transform: scale(1.6) translateY(-30px) translateX(5px);
+        opacity: 0.6;
+        background: rgba(150, 150, 150, 0.6);
+    }
+    80% {
+        transform: scale(2) translateY(-40px) translateX(-5px);
+        opacity: 0.4;
+        background: rgba(150, 150, 150, 0.4);
+    }
+    100% {
+        transform: scale(2.5) translateY(-50px) translateX(0);
+        opacity: 0;
+        background: rgba(150, 150, 150, 0.2);
+    }
 } 
