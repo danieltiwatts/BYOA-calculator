@@ -4,6 +4,7 @@ let currentValue = '';
 let firstOperand = null;
 let operator = null;
 let waitingForSecondOperand = false;
+let fartSound = document.getElementById('fartSound');
 
 buttons.forEach(button => {
     button.addEventListener('click', () => {
@@ -28,6 +29,7 @@ buttons.forEach(button => {
             currentValue = display.value;
         } else if (value === '=') {
             if (operator && !waitingForSecondOperand) {
+                fartSound.play();
                 const secondOperand = parseFloat(currentValue);
                 const result = calculate(firstOperand, operator, secondOperand);
                 display.value = result;
